@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApplication3.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,18 +14,26 @@ namespace WebApplication3.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly DataContext _context;
+        public ValuesController(DataContext context)
+        {
+            _context = context;
+
+        }
         // GET: api/<ValuesController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetValues()
         {
-            return new string[] { "value1", "value2" };
+            var values = await _context.Values.ToListAsync();
+            return Ok(values);
         }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetValue(int id)
         {
-            return "value";
+            var value = _context.Values.FirstOrDefault(x=>x.Id==id);
+            return Ok(value);
         }
 
         // POST api/<ValuesController>
