@@ -13,6 +13,6 @@ namespace WebApplication3.Data
         {
 
         }
-        public DbSet<Value> Values { get; set; }
+        public DbSet<AppUser> AppUser { get; set; }
     }
 }
