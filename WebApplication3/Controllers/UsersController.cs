@@ -10,12 +10,10 @@ using WebApplication3.Data;
 
 namespace WebApplication3.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ValuesController : ControllerBase
+    public class UsersController : BaseAPIController
     {
         private readonly DataContext _context;
-        public ValuesController(DataContext context)
+        public UsersController(DataContext context)
         {
             _context = context;
 
@@ -24,7 +22,7 @@ namespace WebApplication3.Controllers
         [HttpGet]
         public async Task<IActionResult> GetValues()
         {
-            var values = await _context.Values.ToListAsync();
+            var values = await _context.AppUser.ToListAsync();
             return Ok(values);
         }
 
@@ -32,7 +30,7 @@ namespace WebApplication3.Controllers
         [HttpGet("{id}")]
         public IActionResult GetValue(int id)
         {
-            var value = _context.Values.FirstOrDefault(x=>x.Id==id);
+            var value = _context.AppUser.FirstOrDefault(x=>x.Id==id);
             return Ok(value);
         }
 
